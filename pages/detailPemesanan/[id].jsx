@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import Image from "next/image";
 
 function DetailPemesanan() {
+  const [count, setCount] = useState(1);
+  function decrementCount() {
+    setCount((prevCount) => prevCount - 1);
+  }
+  function incrementCount() {
+    setCount((prevCount) => prevCount + 1);
+  }
+
   return (
     <div className="px-5 py-3">
       <h2 className="mb-4">Detail Pesanan</h2>
@@ -26,9 +34,13 @@ function DetailPemesanan() {
           <div className="d-flex">
             <div>jumlah tiket</div>
             <div className="ms-5">
-              <Button variant="outline-secondary">-</Button>{" "}
-              <Button variant="outline-secondary">1</Button>{" "}
-              <Button variant="outline-secondary">+</Button>{" "}
+              <Button variant="outline-secondary" onClick={decrementCount}>
+                -
+              </Button>
+              <Button variant="outline-secondary">{count}</Button>
+              <Button variant="outline-secondary" onClick={incrementCount}>
+                +
+              </Button>
             </div>
           </div>
         </div>
@@ -75,7 +87,7 @@ function DetailPemesanan() {
             </div>
             <div className="ms-5 ps-5 text-end">
               <p>Rp.500.000</p>
-              <p>1</p>
+              <p>{count}</p>
               <p>Rp.500.000</p>
             </div>
           </div>

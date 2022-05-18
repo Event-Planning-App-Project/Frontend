@@ -30,7 +30,7 @@ function RiwayatUser() {
                 />
               </Card>
             </div>
-            <div className="px-5 py-3 b">
+            <div className="px-5 py-3 ">
               <p>TITLE</p>
               <div>21 Mei 2022</div>
               <div>12.00 - 22.00 WIB</div>
