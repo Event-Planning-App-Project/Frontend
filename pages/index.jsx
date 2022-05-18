@@ -1,7 +1,10 @@
-import Link from "next/link";
-import { Card, Button } from "react-bootstrap";
+import { useState } from "react";
+import Bioskop from "../components/home/Bioskop";
+import Konser from "../components/home/Konser";
 
 export default function Home() {
+  const [event, setEvent] = useState(false);
+
   return (
     <div>
       <div className="text-center px-5 py-3">
@@ -10,25 +13,14 @@ export default function Home() {
         </div>
         <div className="d-flex justify-content-center">
           <h5 className="mx-2">
-            <a>Bioskop online</a>
+            <p onClick={() => setEvent(false)}>Bioskop online</p>
           </h5>
           <h5 className="mx-2">
-            <Link href="/home/Konser">
-              <a>Konser musik</a>
-            </Link>
+            <p onClick={() => setEvent(true)}>Konser musik</p>
           </h5>
         </div>
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Bioskop</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
+
+        <div>{event ? <Konser /> : <Bioskop />}</div>
       </div>
     </div>
   );
