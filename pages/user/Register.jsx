@@ -1,6 +1,8 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
+import Router from "next/router";
 
 function Register() {
   const [fields, setFields] = useState({
@@ -9,11 +11,30 @@ function Register() {
     password: "",
   });
 
-  function registerHandler(e) {
+  const [status, setStatus] = useState("");
+
+  const registerHandler = async (e) => {
     e.preventDefault();
 
-    console.log(fields);
-  }
+    setStatus("loading");
+
+    const registerReq = await fetch("http://54.179.30.163:8050/user", {
+      method: "POST",
+      body: JSON.stringify(fields),
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!registerReq.ok) return setStatus("error " + registerReq.status);
+
+    const content = await registerReq.json();
+
+    setStatus("success");
+
+    Router.push("/user/Login");
+  };
 
   function fieldsHandler(e) {
     const name = e.target.getAttribute("name");
@@ -70,6 +91,7 @@ function Register() {
                     Register
                   </Button>
                 </div>
+                <div>{status}</div>
               </Form>
             </div>
           </Col>

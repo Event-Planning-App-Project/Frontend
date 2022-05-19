@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Bioskop from "../components/home/Bioskop";
 import Konser from "../components/home/Konser";
 
 export default function Home() {
   const [event, setEvent] = useState(false);
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetcData = async () => {
+      const res = await fetch("http://54.179.30.163:8050/category");
+      const dataCategory = await res.json();
+
+      setData(dataCategory);
+    };
+  }, [data]);
 
   return (
     <div>

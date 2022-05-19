@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
+// import Link from "next/link";
 
-function Bioskop() {
+export default function Bioskop() {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
@@ -17,5 +19,3 @@ function Bioskop() {
     </div>
   );
 }
-
-export default Bioskop;
