@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import Image from "next/image";
+import Link from "next/link";
 
 function DetailPemesanan() {
   const [count, setCount] = useState(1);
+  const price = "30000";
+
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://54.179.30.163:8050/transaction");
+      const dataPesanan = await res.json();
+
+      setEvents(dataPesanan);
+      console.log(dataPesanan);
+    };
+    fetchData().catch(console.error);
+  }, []);
+
   function decrementCount() {
     setCount((prevCount) => prevCount - 1);
   }
@@ -86,9 +101,9 @@ function DetailPemesanan() {
               <p>total pembayaran</p>
             </div>
             <div className="ms-5 ps-5 text-end">
-              <p>Rp.500.000</p>
+              <p>Rp. {price}</p>
               <p>{count}</p>
-              <p>Rp.500.000</p>
+              <p>Rp. {price * count}</p>
             </div>
           </div>
           <Button variant="danger" size="sm">
