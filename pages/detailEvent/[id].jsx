@@ -99,7 +99,7 @@ function DetailEvent() {
                 <Card.Title className="me-5">Harga Total</Card.Title>
                 <Card.Title>Rp. {el.price}</Card.Title>
               </Card.Body>
-              <Link href="/detailPemesanan/1">
+              <Link href="/detail/Pemesanan/1">
                 <a>
                   <Button className="mt-2" variant="danger" size="sm">
                     beli tiket
