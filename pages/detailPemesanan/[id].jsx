@@ -43,9 +43,19 @@ function DetailPemesanan() {
 
         <div>
           <h4 className="my-2">Judul Event</h4>
-          <p>Tanggal</p>
-          <p>waktu</p>
-          <p>alamat</p>
+          <div className="d-flex">
+            <div className="me-4">
+              <p>Tanggal </p>
+              <p>waktu </p>
+              <p>alamat </p>
+            </div>
+            <div className="ms-5">
+              <p>29 Mei 2022</p>
+              <p>20.00 WIB - 21.30 WIB</p>
+              <p>Zoom Online</p>
+            </div>
+          </div>
+
           <div className="d-flex">
             <div>jumlah tiket</div>
             <div className="ms-5">

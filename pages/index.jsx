@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Bioskop from "../components/home/Bioskop";
-import Konser from "../components/home/Konser";
+import Bioskop from "../pages/home/Bioskop";
+import Konser from "../pages/home/Konser";
 
 export default function Home() {
   const [event, setEvent] = useState(false);
