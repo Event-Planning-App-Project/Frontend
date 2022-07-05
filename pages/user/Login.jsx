@@ -1,7 +1,51 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Image from "next/image";
+import { useState } from "react";
+import Link from "next/link";
+import Router from "next/router";
 
 function Login() {
+  const [fields, setFields] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
+
+    setStatus("loading");
+
+    const loginReq = await fetch("http://54.179.30.163:8050/login", {
+      method: "POST",
+      body: JSON.stringify(fields),
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!loginReq.ok) return setStatus("error " + loginReq.status);
+
+    const content = await loginReq.json();
+
+    setStatus("success");
+
+    localStorage.setItem("token", content.data.Token);
+
+    Router.push("/");
+  };
+
+  function fieldsHandler(e) {
+    const name = e.target.getAttribute("name");
+
+    setFields({
+      ...fields,
+      [name]: e.target.value,
+    });
+  }
+
   return (
     <div>
       <Container className="mt-5">
@@ -13,10 +57,12 @@ function Login() {
                 <p>Welcome back! Please enter your details</p>
               </div>
 
-              <Form className="mt-20">
+              <Form onSubmit={loginHandler.bind(this)} className="mt-20">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
+                    name="email"
+                    onChange={fieldsHandler.bind(this)}
                     autoComplete="of"
                     type="email"
                     placeholder="Enter your email"
@@ -26,21 +72,20 @@ function Login() {
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    name="password"
+                    onChange={fieldsHandler.bind(this)}
                     autoComplete="of"
                     type="password"
                     placeholder="Enter your password"
                   />
                 </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="formBasicCheckbox"
-                ></Form.Group>
 
                 <div className="d-grid gap-2">
-                  <Button variant="danger" size="sm">
+                  <Button type="submit" variant="danger" size="sm">
                     Login
                   </Button>
                 </div>
+                <div>{status}</div>
               </Form>
             </div>
           </Col>

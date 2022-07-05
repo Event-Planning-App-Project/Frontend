@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import Image from "next/image";
+import Link from "next/link";
 
 function DetailPemesanan() {
+  const [count, setCount] = useState(1);
+  const price = "30000";
+
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://54.179.30.163:8050/transaction");
+      const dataPesanan = await res.json();
+
+      setEvents(dataPesanan);
+      console.log(dataPesanan);
+    };
+    fetchData().catch(console.error);
+  }, []);
+
+  function decrementCount() {
+    setCount((prevCount) => prevCount - 1);
+  }
+  function incrementCount() {
+    setCount((prevCount) => prevCount + 1);
+  }
+
   return (
     <div className="px-5 py-3">
       <h2 className="mb-4">Detail Pesanan</h2>
@@ -20,15 +43,29 @@ function DetailPemesanan() {
 
         <div>
           <h4 className="my-2">Judul Event</h4>
-          <p>Tanggal</p>
-          <p>waktu</p>
-          <p>alamat</p>
+          <div className="d-flex">
+            <div className="me-4">
+              <p>Tanggal </p>
+              <p>waktu </p>
+              <p>alamat </p>
+            </div>
+            <div className="ms-5">
+              <p>29 Mei 2022</p>
+              <p>20.00 WIB - 21.30 WIB</p>
+              <p>Zoom Online</p>
+            </div>
+          </div>
+
           <div className="d-flex">
             <div>jumlah tiket</div>
             <div className="ms-5">
-              <Button variant="outline-secondary">-</Button>{" "}
-              <Button variant="outline-secondary">1</Button>{" "}
-              <Button variant="outline-secondary">+</Button>{" "}
+              <Button variant="outline-secondary" onClick={decrementCount}>
+                -
+              </Button>
+              <Button variant="outline-secondary">{count}</Button>
+              <Button variant="outline-secondary" onClick={incrementCount}>
+                +
+              </Button>
             </div>
           </div>
         </div>
@@ -74,9 +111,9 @@ function DetailPemesanan() {
               <p>total pembayaran</p>
             </div>
             <div className="ms-5 ps-5 text-end">
-              <p>Rp.500.000</p>
-              <p>1</p>
-              <p>Rp.500.000</p>
+              <p>Rp. {price}</p>
+              <p>{count}</p>
+              <p>Rp. {price * count}</p>
             </div>
           </div>
           <Button variant="danger" size="sm">

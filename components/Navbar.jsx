@@ -7,7 +7,7 @@ function NavbarComponent() {
     <>
       <Navbar className="px-5" bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">
+          <Navbar.Brand href="/">
             <span>
               <Image src="/logo.svg" alt="Logo" width={100} height={100} />
             </span>
@@ -26,8 +26,8 @@ function NavbarComponent() {
             id="navbarScroll"
           >
             <Nav>
-              <Nav.Link href="#action1">Login</Nav.Link>
-              <Nav.Link href="#action2">Register</Nav.Link>
+              <Nav.Link href="/user/Login">Login</Nav.Link>
+              <Nav.Link href="/user/Register">Register</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

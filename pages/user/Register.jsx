@@ -1,7 +1,50 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Image from "next/image";
+import { useState } from "react";
+import Link from "next/link";
+import Router from "next/router";
 
 function Register() {
+  const [fields, setFields] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [status, setStatus] = useState("");
+
+  const registerHandler = async (e) => {
+    e.preventDefault();
+
+    setStatus("loading");
+
+    const registerReq = await fetch("http://54.179.30.163:8050/user", {
+      method: "POST",
+      body: JSON.stringify(fields),
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!registerReq.ok) return setStatus("error " + registerReq.status);
+
+    const content = await registerReq.json();
+
+    setStatus("success");
+
+    Router.push("/user/Login");
+  };
+
+  function fieldsHandler(e) {
+    const name = e.target.getAttribute("name");
+
+    setFields({
+      ...fields,
+      [name]: e.target.value,
+    });
+  }
+
   return (
     <div>
       <Container className="mt-5">
@@ -13,11 +56,12 @@ function Register() {
                 <p>Welcome back! Please enter your details</p>
               </div>
 
-              <Form className="mt-20">
+              <Form onSubmit={registerHandler.bind(this)} className="mt-20">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
-                    autoComplete="of"
+                    name="username"
+                    onChange={fieldsHandler.bind(this)}
                     type="text"
                     placeholder="Enter your name"
                   />
@@ -25,7 +69,8 @@ function Register() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    autoComplete="of"
+                    name="email"
+                    onChange={fieldsHandler.bind(this)}
                     type="email"
                     placeholder="Enter your email"
                   />
@@ -34,21 +79,19 @@ function Register() {
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
-                    autoComplete="of"
+                    name="password"
+                    onChange={fieldsHandler.bind(this)}
                     type="password"
                     placeholder="Enter your password"
                   />
                 </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="formBasicCheckbox"
-                ></Form.Group>
 
                 <div className="d-grid gap-2">
-                  <Button variant="danger" size="sm">
+                  <Button variant="danger" size="sm" type="submit">
                     Register
                   </Button>
                 </div>
+                <div>{status}</div>
               </Form>
             </div>
           </Col>
